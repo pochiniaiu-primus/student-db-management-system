@@ -19,7 +19,7 @@ class CreateStudent:
                     age INT,
                     number TEXT
                 );
-            """).format(table_name=sql.Identifier("students2_0"))
+            """).format(table_name=sql.Identifier("students2_1"))
 
             # Execute a SQL query
             cursor.execute(create_table_query)
