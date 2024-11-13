@@ -13,7 +13,7 @@ class StudentDataReader:
             cursor = self.connection.cursor()
 
             # Execute the SQL query to retrieve all rows in the table
-            cursor.execute("SELECT * FROM students2_0;")
+            cursor.execute("SELECT * FROM students2_1;")
 
             # Fetch all results from the query
             students = cursor.fetchall()
