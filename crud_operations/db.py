@@ -25,6 +25,7 @@ def create_connection():
 
 def close_connection(conn):
     """Close the database connection."""
+    # Check if the conn variable is not None.
     if conn:
         try:
             conn.close()

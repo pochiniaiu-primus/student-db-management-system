@@ -1,11 +1,12 @@
 from crud_operations.create_student import CreateStudent
 from crud_operations.add_student import AddStudent
+from crud_operations.read_student_data import StudentDataReader
 from crud_operations.db import create_connection_with_retry, close_connection
 
 RETRIES = 3
-DELAY = 5  # seconds
+DELAY = 5  # Delay in seconds for retrying connection
 
-# Initialize the connection as None
+# Initialize the database connection as None
 conn = None
 
 try:
@@ -19,23 +20,30 @@ try:
         print("\nWelcome to the student database management system!")
         print('1. Create Table')
         print('2. Insert Data')
-        print('3. Exit')
+        print('3. Read Data')
+        print('4. Exit')
 
         try:
-            choice = int(input('Enter your choice (1-7): '))
+            choice = int(input('Enter your choice (1-4): '))
         except ValueError:
-            print("Invalid input. Please enter a number (1-3).")
+            print("Invalid input. Please enter a number (1-4).")
             continue
 
         if choice == 1:
             # Create an instance of CreateStudent with the existing connection
             create_student_instance = CreateStudent(conn)
-            # Create the table
+            # Create table if it does not exist
             create_student_instance.create_student_table()
         elif choice == 2:
+            # Insert new student data
             insert_student_instance = AddStudent(conn)
             insert_student_instance.add_student()
         elif choice == 3:
+            # Read and display student data
+            read_student_instance = StudentDataReader(conn)
+            read_student_instance.read_data()
+        elif choice == 4:
+            # Exit the loop and application
             print("Exiting the application.")
             break
         else:
