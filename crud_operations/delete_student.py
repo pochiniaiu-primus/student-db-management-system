@@ -16,7 +16,7 @@ class DeleteStudent:
             table_name (str): Name of the database table.
         """
         self.connection = db_connection
-        self.table_name = table_name
+        self.table_name = table_name  # Table name for deleting records
 
     def delete_student(self, student_id):
         """
@@ -28,7 +28,6 @@ class DeleteStudent:
         """
         try:
             with self.connection.cursor() as cursor:
-
                 # Check if the student exists in the database
                 find_student_query = sql.SQL("""
                              SELECT id FROM {table_name}
@@ -40,9 +39,9 @@ class DeleteStudent:
                 student = cursor.fetchone()
 
                 if not student:
-                    return False
+                    return False  # Student not found
 
-                # Delete the student record if confirmed
+                # Proceed to delete the student if found
                 delete_query = sql.SQL("""
                      DELETE FROM {table_name} 
                      WHERE id = %s
@@ -51,13 +50,13 @@ class DeleteStudent:
                 )
                 cursor.execute(delete_query, (student_id,))
 
-                # Commit the deletion to the database
+                # Commit the transaction
                 self.connection.commit()
 
-                return True
+                return True  # Successfully deleted
 
         except Exception as e:
-            # Error handling and rollback in case of an error
+            # Handle errors and rollback transaction if necessary
             self.connection.rollback()
             messagebox.showerror('Database Error', f'Error deleting student: {e}')
             return False

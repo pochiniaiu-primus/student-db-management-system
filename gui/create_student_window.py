@@ -5,65 +5,65 @@ from crud_operations.add_student import AddStudent
 
 
 class CreateStudentWindow:
+    """This class creates a GUI window to allow the user to add a new student to the database."""
 
     def __init__(self, master, db_connection):
         """
         Initialize a new window for creating a student.
         Args:
-            master (Tkinter.Tk): The parent Tkinter window (root in this case).
-            db_connection: A live connection to the PostgreSQL database.
+            master (Tkinter.Tk): The parent Tkinter window (usually the root window).
+            db_connection: A live connection to the PostgreSQL database used to add the student.
         """
-        # Create a new top-level window (child window of the main root window)
+        # Create a new top-level window (a child window of the main root window)
         self.top = tk.Toplevel(master)
         self.top.title('Create New Student')
 
-        # Store the database connection
+        # Store the database connection for use in submitting student data
         self.db_connection = db_connection
 
-        # Form fields for entering student datails
+        # Call the method to create and display form fields
         self.create_form_fields()
 
     def create_form_fields(self):
         """
-        Create, pack and display form fields for user input to collect student information.
+         Create, pack, and display form fields for user input to collect student information.
 
-        This method sets up the graphical interface components (labels and input fields)
-        for entering student details such as name, age, address, and contact number.
-        It also adds a Submit button to trigger the submission of the data.
+         This method sets up the graphical interface components (labels and entry fields)
+         for entering student details such as:
+             - Name (text input)
+             - Age (numeric input)
+             - Address (text input)
+             - Contact Number (text input)
 
-        Fields:
-            - Student Name (Text Entry)
-            - Student Age (Numeric Entry)
-            - Student Address (Text Entry)
-            - Student Contact Number (Text Entry)
-        """
+         It also adds a 'Submit' button to trigger the submission of the form data.
+         """
 
-        # Create and pack a label and text entry field for the student's name
+        # Label and input field for the student's name
         tk.Label(self.top, text="Enter Student Name: ").pack(pady=5)
         self.name_entry = tk.Entry(self.top)
         self.name_entry.pack(pady=5)
 
-        # Create and pack a label and text entry field for the student's age
+        # Label and input field for the student's age
         tk.Label(self.top, text="Enter Student Age: ").pack(pady=5)
         self.age_entry = tk.Entry(self.top)
         self.age_entry.pack(pady=5)
 
-        # Create and pack a label and text entry field for the student's address
+        # Label and input field for the student's address
         tk.Label(self.top, text="Enter Student Address: ").pack(pady=5)
         self.address_entry = tk.Entry(self.top)
         self.address_entry.pack(pady=5)
 
-        # Create and pack a label and text entry field for the student's contact number
+        # Label and input field for the student's contact number
         tk.Label(self.top, text="Enter Student Number: ").pack(pady=5)
         self.number_entry = tk.Entry(self.top)
         self.number_entry.pack(pady=5)
 
-        # Submit button for form submission
+        # Submit button to trigger the student creation process
         tk.Button(self.top, text='Submit', command=self.submit_student).pack(pady=10)
 
     def submit_student(self):
         """
-        Collects the entered data and adds the student to the database using AddStudent class.
+        Collects the entered data from the form fields and adds the student to the database using AddStudent class.
         """
 
         # Get the entered name, age, address and number from the input fields
