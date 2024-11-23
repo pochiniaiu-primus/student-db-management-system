@@ -1,18 +1,22 @@
 from tkinter import Tk, Button, messagebox
+
 from crud_operations.db import create_connection_with_retry, close_connection
 from gui.create_student_window import CreateStudentWindow
 from gui.delete_student_window import DeleteStudentWindow
 from gui.read_student_window import ReadStudentWindow
+from gui.update_student_window import UpdateStudentWindow
 
 
 class MainWindow:
     """
     Main GUI window for the Student Database Management System.
+    Provides CRUD operations through buttons.
     """
 
     def __init__(self, master, db_connection):
         """
         Initialize the main application window with buttons to perform CRUD operations.
+
         Args:
             master (Tk): The root Tkinter window.
             db_connection: Active database connection object.
@@ -28,32 +32,42 @@ class MainWindow:
                                     command=self.open_delete_window)
         self.display_button = Button(self.master, text="Display Student",
                                      command=self.open_fetch_window)
+        self.update_button = Button(self.master, text="Update Student",
+                                    command=self.open_update_window)
 
         # Pack buttons to make them visible in the GUI
         self.create_button.pack(pady=10)
         self.delete_button.pack(pady=10)
         self.display_button.pack(pady=10)
+        self.update_button.pack(pady=10)
 
-    def open_create_window(self):
+    def open_create_window(self) -> None:
         """
         Opens the CreateStudentWindow when the user clicks the 'Create New Student' button.
         """
         CreateStudentWindow(self.master, self.db_connection)
 
-    def open_delete_window(self):
+    def open_delete_window(self) -> None:
         """
         Opens the DeleteStudentWindow when the user clicks the 'Delete Student' button.
         """
         DeleteStudentWindow(self.master, self.db_connection)
 
-    def open_fetch_window(self):
+    def open_fetch_window(self) -> None:
         """
         Opens the ReadStudentWindow when the user clicks the 'Display Student' button.
+        Ensures only one window instance exists at a time.
         """
         ReadStudentWindow(self.master, self.db_connection)
 
+    def open_update_window(self) -> None:
+        """
+        Opens the UpdateStudentWindow when the user clicks the 'Update Student' button.
+        """
+        UpdateStudentWindow(self.master, self.db_connection)
 
-def start_gui():
+
+def start_gui() -> None:
     """
     Initializes and starts the Tkinter GUI application.
     This function creates the root Tkinter window, establishes the database connection,
