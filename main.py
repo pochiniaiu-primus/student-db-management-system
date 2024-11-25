@@ -1,3 +1,4 @@
+import logging
 from tkinter import Tk, Button, messagebox
 
 from crud_operations.db import create_connection_with_retry, close_connection
@@ -6,6 +7,7 @@ from gui.delete_student_window import DeleteStudentWindow
 from gui.read_student_window import ReadStudentWindow
 from gui.update_student_window import UpdateStudentWindow
 from gui.update_student_attribute_window import UpdateStudentAttributeWindow
+from crud_operations.create_student_table import CreateStudent
 
 
 class MainWindow:
@@ -80,31 +82,37 @@ class MainWindow:
 def start_gui() -> None:
     """
     Initializes and starts the Tkinter GUI application.
-    This function creates the root Tkinter window, establishes the database connection,
-    and initializes the MainWindow class for CRUD operations.
+    This function sets up the root Tkinter window, establishes the database connection,
+    ensures the student table exists, and opens the main window for CRUD operations.
     """
-    root = Tk()  # Create a new Tkinter window (root window)
+    root = Tk()  # Create the main Tkinter window (root window)
     root.title('Student Database Management System')
-    root.geometry('400x300')  # Define the size of the window
+    root.geometry('400x300')  # Define the initial size of the window
     root.config(padx=10, pady=10)  # Add padding around the window edges
 
-    # Establish the database connection with retry logic
     try:
+        # Establish the database connection with retry logic
         conn = create_connection_with_retry(retries=3, delay=5)
-    except Exception as e:
-        messagebox.showerror('Database Error', f'Could not connect to the database: {e}')
-        root.destroy()  # Close the window if the connection fails
-        return
+        if not conn:
+            # If the connection is not successful, show an error and exit
+            messagebox.showerror('Database Error', 'Could not connect to the database.')
+            return
 
-    if conn:
-        # Create and open the main window for CRUD operations
+        # Ensure the student table exists by calling CreateStudent
+        table_creator = CreateStudent(conn)
+        table_creator.create_student_table()  # Create the table if it doesn't exist.
+
+        # After successful table creation, open the main window for CRUD operations
         MainWindow(root, conn)
         root.protocol('WM_DELETE_WINDOW',
                       lambda: (close_connection(conn), root.destroy()))
         root.mainloop()  # Start the Tkinter main event loop
-    else:
-        messagebox.showerror('Database Connection Error',
-                             'Could not connect to the database.')
+
+    except Exception as e:
+        # Handle any errors during the connection or table creation process
+        messagebox.showerror('Database Error', f'Could not initialize the database: {e}')
+        logging.error(f'Initialization error: {e}', exc_info=True)
+        root.destroy()  # Close the window if the connection or initialization fails
 
 
 start_gui()
