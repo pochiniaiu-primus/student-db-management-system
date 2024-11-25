@@ -5,6 +5,7 @@ from gui.create_student_window import CreateStudentWindow
 from gui.delete_student_window import DeleteStudentWindow
 from gui.read_student_window import ReadStudentWindow
 from gui.update_student_window import UpdateStudentWindow
+from gui.update_student_attribute_window import UpdateStudentAttributeWindow
 
 
 class MainWindow:
@@ -34,12 +35,15 @@ class MainWindow:
                                      command=self.open_fetch_window)
         self.update_button = Button(self.master, text="Update Student",
                                     command=self.open_update_window)
+        self.update_attribute = Button(self.master, text="Update Attribute",
+                                       command=self.open_update_attribute_window)
 
         # Pack buttons to make them visible in the GUI
         self.create_button.pack(pady=10)
         self.delete_button.pack(pady=10)
         self.display_button.pack(pady=10)
         self.update_button.pack(pady=10)
+        self.update_attribute.pack(pady=10)
 
     def open_create_window(self) -> None:
         """
@@ -66,6 +70,12 @@ class MainWindow:
         """
         UpdateStudentWindow(self.master, self.db_connection)
 
+    def open_update_attribute_window(self) -> None:
+        """
+        Opens the UpdateStudentAttributeWindow when the user clicks the 'Update Attribute' button.
+        """
+        UpdateStudentAttributeWindow(self.master, self.db_connection)
+
 
 def start_gui() -> None:
     """
@@ -75,7 +85,7 @@ def start_gui() -> None:
     """
     root = Tk()  # Create a new Tkinter window (root window)
     root.title('Student Database Management System')
-    root.geometry('400x200')  # Define the size of the window
+    root.geometry('400x300')  # Define the size of the window
     root.config(padx=10, pady=10)  # Add padding around the window edges
 
     # Establish the database connection with retry logic
