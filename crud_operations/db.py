@@ -5,7 +5,7 @@ import logging
 
 import psycopg2
 
-# Set up logging to log errors to a file
+# Set up logging
 logging.basicConfig(filename='app.log', level=logging.ERROR,
                     format='%(asctime)s - %(levelname)s - %(message)s')
 
