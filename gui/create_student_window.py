@@ -67,22 +67,15 @@ class CreateStudentWindow:
         """
 
         # Get the entered name, age, address and number from the input fields
-
         name = self.name_entry.get()
-        try:
-            age = int(self.age_entry.get())
-        except ValueError:
-            messagebox.showerror('Invalid Age', 'Please enter a valid number')
-            return
-
         address = self.address_entry.get()
-
         number = self.number_entry.get()
+        age = self.age_entry.get()
 
         # Validate name, address, and number fields
-        if not name or not address or not number:
+        if not name or not address or not age:
             messagebox.showerror('Missing Fields',
-                                 'Please fill out all fields except age.')
+                                 'Please fill out all fields.')
             return
 
         # Validate phone number

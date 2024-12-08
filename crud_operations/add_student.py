@@ -26,10 +26,21 @@ class AddStudent:
             age (int): Age of the student.
             number (str): Contact number of the student.
         """
+        # Validate input fields
+        if not name or not address or not age:
+            messagebox.showerror('Missing Fields', 'Please fill out all fields.')
+            return
+
         # Validate the phone number format
         if not self.is_valid_phone_number(number):
             messagebox.showerror('Invalid Phone Number',
                                  'Please enter a valid phone number.')
+            return
+
+        try:
+            age = int(age)  # Ensure age is an integer
+        except ValueError:
+            messagebox.showerror('Invalid Age', 'Please enter a valid number for age.')
             return
 
         try:
@@ -51,7 +62,7 @@ class AddStudent:
 
         except Exception as e:
             # Handle any errors during the database operation
-            messagebox.showerror('Database Error,' f"Error inserting data: {e}")
+            messagebox.showerror('Database Error', f'Error inserting data: {e}')
             self.connection.rollback()  # Rollback if an error occurs to maintain data integrity
 
         finally:

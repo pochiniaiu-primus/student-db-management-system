@@ -28,24 +28,25 @@ class MainWindow:
         self.db_connection = db_connection  # Database connection object
         master.title('Student Database Management System')
 
-        # Create and display the buttons for different operations
-        self.create_button = Button(self.master, text="Create New Student",
-                                    command=self.open_create_window)
-        self.delete_button = Button(self.master, text="Delete Student",
-                                    command=self.open_delete_window)
-        self.display_button = Button(self.master, text="Display Student",
-                                     command=self.open_fetch_window)
-        self.update_button = Button(self.master, text="Update Student",
-                                    command=self.open_update_window)
-        self.update_attribute = Button(self.master, text="Update Attribute",
-                                       command=self.open_update_attribute_window)
+        self.create_buttons()
+
+    def create_buttons(self):
+        """
+        Creates and displays buttons for CRUD operations.
+        """
+
+        buttons = [
+            ("Create New Student", self.open_create_window),
+            ("Delete Student", self.open_delete_window),
+            ("Display Student", self.open_fetch_window),
+            ("Update Student", self.open_update_window),
+            ("Update Attribute", self.open_update_attribute_window),
+        ]
 
         # Pack buttons to make them visible in the GUI
-        self.create_button.pack(pady=10)
-        self.delete_button.pack(pady=10)
-        self.display_button.pack(pady=10)
-        self.update_button.pack(pady=10)
-        self.update_attribute.pack(pady=10)
+        for text, command in buttons:
+            button = Button(self.master, text=text, command=command)
+            button.pack(pady=10)
 
     def open_create_window(self) -> None:
         """
@@ -115,4 +116,5 @@ def start_gui() -> None:
         root.destroy()  # Close the window if the connection or initialization fails
 
 
-start_gui()
+if __name__ == '__main__':
+    start_gui()
