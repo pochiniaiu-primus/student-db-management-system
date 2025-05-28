@@ -20,6 +20,7 @@ an intuitive GUI.
 
 2. **Delete Student**: Remove a student from the database based on their unique ID.
 
+![img_6.png](img_6.png)
 
 3. **Read Student**: Display the list of all students in the database.
 
