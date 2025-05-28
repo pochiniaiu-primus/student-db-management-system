@@ -10,13 +10,30 @@ include adding new students, updating existing student information, deleting rec
 through
 an intuitive GUI.
 
+![img.png](img.png)
+
 ## Key Features
 
 1. **Create Student**: Add a new student to the database with information such as name, address, age, and phone number.
+
+![img_1.png](img_1.png)
+
 2. **Delete Student**: Remove a student from the database based on their unique ID.
+
+
 3. **Read Student**: Display the list of all students in the database.
+
+![img_2.png](img_2.png)
+
 4. **Update Student**: Modify a student's information, such as their name, address, age or phone number.
+
+![img_3.png](img_3.png)
+
+![img_4.png](img_4.png)
+
 5. **Update Attribute**: Update specific attributes (like address, age, etc.) of a student record.
+
+![img_5.png](img_5.png)
 
 ## Tech Stack
 
